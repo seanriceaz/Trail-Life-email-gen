@@ -419,20 +419,38 @@ textarea:focus {
    ============================================================================= */
 
 .app-footer {
-  padding: 10px 24px;
+  padding: 12px 24px;
   background: var(--surface-2);
   border-top: 1px solid var(--border);
-  font-size: 0.75rem;
-  color: var(--text-muted);
   text-align: center;
 }
 
-.app-footer a {
+.footer-tip {
+  font-size: 0.8rem;
   color: var(--text-muted);
+  margin-bottom: 5px;
+}
+
+/* The "buy me a coffee" link gets a little more emphasis than plain footer links */
+.footer-tip a {
+  color: var(--tl-brown);
+  font-weight: 700;
   text-underline-offset: 2px;
 }
 
-.app-footer a:hover { color: var(--tl-navy); }
+.footer-tip a:hover { color: var(--tl-navy); }
+
+.footer-legal {
+  font-size: 0.72rem;
+  color: #999;
+}
+
+.footer-legal a {
+  color: #999;
+  text-underline-offset: 2px;
+}
+
+.footer-legal a:hover { color: var(--tl-navy); }
 
 
 /* =============================================================================
