@@ -1,35 +1,59 @@
-/* ===== TRAIL LIFE EMAIL GENERATOR — APP STYLES ===== */
+/* =============================================================================
+   TRAIL LIFE PA-0002 — EMAIL GENERATOR
+   App UI styles (not the email output — those styles are inlined in emailBuilder.js)
+   =============================================================================
 
-/* Brand Colors:
-   --tl-brown:      #835D32  (brand tan/brown, PMS 7575 C)
-   --tl-navy:       #1C3557  (dark navy)
-   --tl-red:        #CC2029  (accent red)
-   --tl-gold:       #C8922A  (warm gold)
-   --tl-tan-light:  #F5EDD6  (light tan background)
-   --tl-green:      #4A7A3C  (Woodlands Trails)
-   --tl-blue:       #2B5FA1  (Navigators)
-   --tl-orange:     #C85A1F  (Adventurers)
-*/
+   TABLE OF CONTENTS
+   1. CSS Custom Properties (design tokens)
+   2. Reset & Base
+   3. App Header
+   4. Two-Column Layout
+   5. Editor Panel — Newsletter Settings
+   6. Editor Panel — Section Cards
+   7. Editor Panel — Tag Checkboxes
+   8. Buttons
+   9. Preview Panel
+   10. Responsive
+   ============================================================================= */
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* =============================================================================
+   1. CSS CUSTOM PROPERTIES
+   Brand colors mirror Trail Life USA's 2024 Style Guide.
+   See src/constants.js for the same values used in email output.
+   ============================================================================= */
 
 :root {
-  --tl-brown:     #835D32;
-  --tl-navy:      #1C3557;
-  --tl-red:       #CC2029;
-  --tl-gold:      #C8922A;
-  --tl-tan-light: #F5EDD6;
-  --tl-green:     #4A7A3C;
-  --tl-blue:      #2B5FA1;
-  --tl-orange:    #C85A1F;
+  /* Brand palette */
+  --tl-navy:      #1C3557;  /* headers, footer */
+  --tl-brown:     #835D32;  /* PMS 7575 C — section headers, labels */
+  --tl-red:       #CC2029;  /* logo, primary CTA */
+  --tl-gold:      #C8922A;  /* accent stripes, callout borders */
+  --tl-tan-light: #F5EDD6;  /* light tan for callout backgrounds */
+
+  /* Program division colors */
+  --tl-green:     #4A7A3C;  /* Woodlands Trails */
+  --tl-blue:      #2B5FA1;  /* Navigators */
+  --tl-orange:    #C85A1F;  /* Adventurers */
+
+  /* UI neutrals */
   --surface:      #ffffff;
   --surface-2:    #f4f4f0;
   --border:       #ddd5c8;
   --text:         #1a1a1a;
   --text-muted:   #666;
-  --radius:       6px;
-  --shadow:       0 1px 4px rgba(0,0,0,0.10);
+
+  /* Misc */
+  --radius: 6px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.10);
 }
+
+
+/* =============================================================================
+   2. RESET & BASE
+   ============================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   height: 100%;
@@ -40,7 +64,10 @@ html, body {
   line-height: 1.5;
 }
 
-/* ===== APP HEADER ===== */
+
+/* =============================================================================
+   3. APP HEADER
+   ============================================================================= */
 
 .app-header {
   background: var(--tl-navy);
@@ -75,17 +102,21 @@ html, body {
   margin-top: 1px;
 }
 
-/* ===== MAIN LAYOUT ===== */
+
+/* =============================================================================
+   4. TWO-COLUMN LAYOUT
+   Left: editor panel (fixed width). Right: preview panel (fills remaining space).
+   ============================================================================= */
 
 .app-body {
   display: grid;
   grid-template-columns: 400px 1fr;
-  height: calc(100vh - 62px);
+  height: calc(100vh - 62px); /* subtract header height */
   max-width: 1400px;
   margin: 0 auto;
-  gap: 0;
 }
 
+/* Shared panel chrome */
 .panel {
   display: flex;
   flex-direction: column;
@@ -99,7 +130,7 @@ html, body {
   padding: 14px 20px;
   background: var(--surface);
   border-bottom: 2px solid var(--tl-brown);
-  flex-shrink: 0;
+  flex-shrink: 0;  /* don't shrink when content is long */
 }
 
 .panel-header h2 {
@@ -116,7 +147,10 @@ html, body {
   padding: 20px;
 }
 
-/* ===== EDITOR PANEL ===== */
+
+/* =============================================================================
+   5. EDITOR PANEL — NEWSLETTER SETTINGS (subject, intro, closing fields)
+   ============================================================================= */
 
 .panel-editor {
   border-right: 1px solid var(--border);
@@ -129,11 +163,8 @@ html, body {
   margin: 18px 0;
 }
 
-/* ===== FORM FIELDS ===== */
-
-.field-group {
-  margin-bottom: 14px;
-}
+/* Form field wrapper */
+.field-group { margin-bottom: 14px; }
 
 .field-group label {
   display: block;
@@ -174,8 +205,7 @@ textarea:focus {
   box-shadow: 0 0 0 2px rgba(28,53,87,0.12);
 }
 
-/* ===== SECTIONS HEADER ===== */
-
+/* Row above the section list: "Sections" heading + Add button */
 .sections-header {
   display: flex;
   align-items: center;
@@ -197,7 +227,12 @@ textarea:focus {
   margin-bottom: 12px;
 }
 
-/* ===== SECTION CARDS ===== */
+
+/* =============================================================================
+   6. EDITOR PANEL — SECTION CARDS
+   Each card contains a dark header bar (with drag handle + title input + delete)
+   and a body with Description, Detail Line, and Tags fields.
+   ============================================================================= */
 
 .section-list {
   display: flex;
@@ -211,17 +246,13 @@ textarea:focus {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
-  cursor: default;
 }
 
-.section-card.sortable-ghost {
-  opacity: 0.35;
-}
+/* SortableJS state classes */
+.section-card.sortable-ghost  { opacity: 0.35; }
+.section-card.sortable-chosen { box-shadow: 0 4px 16px rgba(28,53,87,0.18); }
 
-.section-card.sortable-chosen {
-  box-shadow: 0 4px 16px rgba(28,53,87,0.18);
-}
-
+/* Dark navy header bar containing the drag handle, title, and delete button */
 .section-card-header {
   display: flex;
   align-items: center;
@@ -238,9 +269,9 @@ textarea:focus {
   line-height: 1;
   user-select: none;
 }
-
 .drag-handle:active { cursor: grabbing; }
 
+/* Title input sits directly in the header bar */
 .section-title-input {
   flex: 1;
   background: transparent;
@@ -252,19 +283,16 @@ textarea:focus {
   font-size: 0.9rem;
   padding: 2px 4px;
 }
-
 .section-title-input::placeholder { color: rgba(255,255,255,0.45); }
-
 .section-title-input:focus {
   outline: none;
   border-bottom-color: var(--tl-gold);
   box-shadow: none;
 }
 
-.section-card-body {
-  padding: 14px 12px 10px;
-}
+.section-card-body { padding: 14px 12px 10px; }
 
+/* Delete (✕) button in the section header */
 .btn-icon {
   background: none;
   border: none;
@@ -277,13 +305,17 @@ textarea:focus {
   line-height: 1;
   transition: color 0.15s, background 0.15s;
 }
-
 .btn-icon:hover {
   color: #fff;
   background: rgba(204,32,41,0.5);
 }
 
-/* ===== TAG CHECKBOXES ===== */
+
+/* =============================================================================
+   7. EDITOR PANEL — TAG CHECKBOXES
+   Pill-shaped toggle labels. Active (checked) state fills the pill with the
+   program division's color.
+   ============================================================================= */
 
 .tag-checkboxes {
   display: flex;
@@ -307,20 +339,20 @@ textarea:focus {
   user-select: none;
 }
 
-.tag-label input[type="checkbox"] {
-  width: auto;
-  accent-color: currentColor;
-}
-
-.tag-woodland  { border-color: var(--tl-green);  color: var(--tl-green); }
-.tag-navigators{ border-color: var(--tl-blue);   color: var(--tl-blue); }
+/* Unchecked: outline only */
+.tag-woodland   { border-color: var(--tl-green);  color: var(--tl-green); }
+.tag-navigators { border-color: var(--tl-blue);   color: var(--tl-blue); }
 .tag-adventurers{ border-color: var(--tl-orange); color: var(--tl-orange); }
 
-.tag-woodland:has(input:checked)   { background: var(--tl-green);  color: #fff; }
-.tag-navigators:has(input:checked) { background: var(--tl-blue);   color: #fff; }
-.tag-adventurers:has(input:checked){ background: var(--tl-orange); color: #fff; }
+/* Checked: filled pill */
+.tag-woodland:has(input:checked)    { background: var(--tl-green);  color: #fff; }
+.tag-navigators:has(input:checked)  { background: var(--tl-blue);   color: #fff; }
+.tag-adventurers:has(input:checked) { background: var(--tl-orange); color: #fff; }
 
-/* ===== BUTTONS ===== */
+
+/* =============================================================================
+   8. BUTTONS
+   ============================================================================= */
 
 .btn {
   display: inline-flex;
@@ -337,33 +369,31 @@ textarea:focus {
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
 }
-
 .btn:active { transform: scale(0.97); }
 
-.btn-primary {
-  background: var(--tl-red);
-  color: #fff;
-}
-.btn-primary:hover { background: #aa1820; }
+.btn-primary            { background: var(--tl-red);   color: #fff; }
+.btn-primary:hover      { background: #aa1820; }
 
-.btn-secondary {
-  background: var(--tl-brown);
-  color: #fff;
-}
-.btn-secondary:hover { background: #6a4c28; }
+.btn-secondary          { background: var(--tl-brown); color: #fff; }
+.btn-secondary:hover    { background: #6a4c28; }
 
-/* ===== PREVIEW PANEL ===== */
 
-.panel-preview {
-  background: var(--surface-2);
-}
+/* =============================================================================
+   9. PREVIEW PANEL
+   Renders the live email output. The email HTML is injected as innerHTML
+   so it appears exactly as it will in an email client (minus sandboxing).
+   ============================================================================= */
 
+.panel-preview { background: var(--surface-2); }
+
+/* "Copy HTML" button row */
 .preview-actions {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+/* Brief confirmation that appears after a successful copy */
 .copy-toast {
   font-size: 0.78rem;
   font-weight: 700;
@@ -372,12 +402,10 @@ textarea:focus {
   transition: opacity 0.2s;
   pointer-events: none;
 }
-
 .copy-toast.show { opacity: 1; }
 
-.preview-scroll {
-  background: #e8e3dc;
-}
+/* Grey backdrop that the email "floats" on, matching how email clients look */
+.preview-scroll { background: #e8e3dc; }
 
 .email-preview-frame {
   max-width: 620px;
@@ -385,7 +413,11 @@ textarea:focus {
   box-shadow: 0 2px 20px rgba(0,0,0,0.15);
 }
 
-/* ===== RESPONSIVE ===== */
+
+/* =============================================================================
+   10. RESPONSIVE
+   On narrow viewports, stack the editor above the preview.
+   ============================================================================= */
 
 @media (max-width: 860px) {
   .app-body {
@@ -393,11 +425,11 @@ textarea:focus {
     grid-template-rows: auto 1fr;
     height: auto;
   }
+
   .panel-editor {
     height: auto;
     overflow: visible;
   }
-  .panel-preview {
-    min-height: 500px;
-  }
+
+  .panel-preview { min-height: 500px; }
 }
