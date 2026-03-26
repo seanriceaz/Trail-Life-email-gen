@@ -427,6 +427,13 @@ textarea:focus {
   text-align: center;
 }
 
+.app-footer a {
+  color: var(--text-muted);
+  text-underline-offset: 2px;
+}
+
+.app-footer a:hover { color: var(--tl-navy); }
+
 
 /* =============================================================================
    11. RESPONSIVE
