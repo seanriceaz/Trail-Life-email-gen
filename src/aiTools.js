@@ -14,6 +14,7 @@
  */
 
 import yaml from 'js-yaml';
+import { TAGS } from './constants.js';
 import { addSection } from './sectionManager.js';
 
 // ─── YAML schema documentation (embedded in the AI prompt) ───────────────────
@@ -109,51 +110,64 @@ export function buildPrompt(userContext) {
 
 /**
  * Parses a YAML string and populates the newsletter builder with its content.
- * Clears all existing sections first, then adds the sections from the YAML.
  *
- * Accepted field names are intentionally lenient — both snake_case and
- * camelCase variants are tried so minor LLM formatting variations still work.
+ * Newsletter-level fields (subject, intro, closing) are only overwritten when
+ * those keys are actually present in the YAML — so you can paste section-only
+ * output without clearing your existing header text.
  *
- * @param {string} yamlString - Raw YAML text (may include ``` fences — stripped automatically).
- * @throws {Error} If the YAML is structurally invalid or missing required fields.
+ * All existing section cards are replaced with the sections from the YAML.
+ *
+ * Accepted field names are intentionally lenient — common variants are tried
+ * so minor LLM formatting differences still work.
+ *
+ * @param {string} yamlString - Raw YAML text (``` fences stripped automatically).
+ * @throws {Error} If the YAML is structurally invalid or not a mapping.
  */
 export function importYaml(yamlString) {
   const cleaned = stripCodeFences(yamlString);
   const data    = yaml.load(cleaned);
 
-  if (!data || typeof data !== 'object') {
-    throw new Error('The pasted text does not appear to be valid YAML.');
+  if (!data || typeof data !== 'object' || Array.isArray(data)) {
+    throw new Error('The pasted text does not appear to be valid YAML. Expected a mapping at the top level.');
   }
 
-  // ── Newsletter-level fields ────────────────────────────────────────────────
-  const subject = data.subject ?? '';
-  const intro   = data.intro   ?? '';
-  const closing = data.closing ?? '';
-
-  document.getElementById('email-subject').value = subject;
-  document.getElementById('email-intro').value   = intro.replace(/\n$/, '');
-  document.getElementById('email-closing').value = closing.replace(/\n$/, '');
+  // ── Newsletter-level fields (only set when the key is present) ─────────────
+  // This allows partial imports — e.g. pasting only a `sections:` block
+  // won't wipe out a subject line the user already typed.
+  if ('subject' in data) {
+    document.getElementById('email-subject').value = String(data.subject ?? '');
+  }
+  if ('intro' in data) {
+    document.getElementById('email-intro').value = multilineToString(data.intro);
+  }
+  if ('closing' in data) {
+    document.getElementById('email-closing').value = multilineToString(data.closing);
+  }
 
   // ── Sections ───────────────────────────────────────────────────────────────
-  const rawSections = data.sections ?? data.section ?? [];
+  const rawSections = data.sections ?? data.section ?? null;
+
+  if (rawSections === null) return; // no sections key — header-only import, done
 
   if (!Array.isArray(rawSections)) {
-    throw new Error('Expected "sections" to be a list of items.');
+    throw new Error('"sections" must be a YAML list (each item starting with "- title: …").');
   }
 
-  // Remove all existing section cards before importing
+  // Remove all existing section cards before importing the new ones
   document.querySelectorAll('.section-card').forEach(card => card.remove());
 
   for (const item of rawSections) {
-    const title  = item.title       ?? item.heading     ?? '';
-    const desc   = item.description ?? item.desc        ?? item.body ?? '';
-    const detail = item.detail      ?? item.details     ?? item.when ?? '';
-    const tags   = normalizeTags(item.tags ?? item.tag  ?? []);
+    if (!item || typeof item !== 'object') continue;
 
-    // Silently skip entirely empty entries (LLMs sometimes emit blank list items)
+    const title  = String(item.title       ?? item.heading ?? '').trim();
+    const desc   = multilineToString(item.description ?? item.desc ?? item.body ?? '');
+    const detail = normalizeDetail(item.detail ?? item.details ?? item.when ?? '');
+    const tags   = normalizeTags(item.tags ?? item.tag ?? []);
+
+    // Skip blank stubs (LLMs sometimes emit empty list entries)
     if (!title && !desc && !detail) continue;
 
-    addSection(title, multilineToString(desc), detail, tags);
+    addSection(title, desc, detail, tags);
   }
 }
 
@@ -176,21 +190,42 @@ function stripCodeFences(str) {
 /**
  * Normalizes the tags value from the YAML.
  * Handles: array of strings, a single string, or missing/null.
- * Silently drops any value that isn't one of the three valid tag names.
+ *
+ * Matching is case-insensitive so LLM output like "navigators" or
+ * "WOODLANDS TRAILS" still resolves to the correct canonical value.
+ * Unknown values that don't fuzzy-match any valid tag are silently dropped.
  *
  * @param {string|string[]|null} raw
- * @returns {string[]}
+ * @returns {string[]}  Canonical tag strings ready to match checkbox values.
  */
 function normalizeTags(raw) {
-  const VALID = new Set(['Woodlands Trails', 'Navigators', 'Adventurers']);
+  const VALID = TAGS.map(t => t.value); // ['Woodlands Trails', 'Navigators', 'Adventurers']
 
-  const candidates = Array.isArray(raw)  ? raw
-                   : typeof raw === 'string' ? [raw]
+  const candidates = Array.isArray(raw)       ? raw
+                   : typeof raw === 'string'  ? [raw]
                    : [];
 
   return candidates
     .map(t => String(t).trim())
-    .filter(t => VALID.has(t));
+    .map(t => VALID.find(v => v.toLowerCase() === t.toLowerCase()) ?? null)
+    .filter(Boolean);
+}
+
+/**
+ * Normalizes a detail field value.
+ * The detail field is a single-line input, but LLMs sometimes use a YAML block
+ * scalar (|) producing a multi-line string. Join those lines with " · " so the
+ * content is preserved without breaking the single-line field.
+ *
+ * @param {string|null} raw
+ * @returns {string}
+ */
+function normalizeDetail(raw) {
+  return String(raw ?? '')
+    .split('\n')
+    .map(l => l.trim())
+    .filter(Boolean)
+    .join(' · ');
 }
 
 /**
