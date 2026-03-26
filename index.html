@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trail Life PA-0002 — Email Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-header-inner">
+    <div class="app-logo">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="18,2 34,30 2,30" fill="#CC2029" stroke="#fff" stroke-width="1.5"/>
+        <text x="18" y="25" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="Open Sans,sans-serif">TL</text>
+      </svg>
+    </div>
+    <div>
+      <h1 class="app-title">Trail Life PA-0002</h1>
+      <p class="app-subtitle">Newsletter Email Generator</p>
+    </div>
+  </div>
+</header>
+
+<main class="app-body">
+
+  <!-- LEFT PANEL: Controls -->
+  <aside class="panel panel-editor">
+    <div class="panel-header">
+      <h2>Email Settings</h2>
+    </div>
+    <div class="panel-content">
+
+      <div class="field-group">
+        <label for="email-subject">Email Subject</label>
+        <input type="text" id="email-subject" placeholder="e.g. Troop PA-0002 — April Newsletter" value="Troop PA-0002 Newsletter">
+      </div>
+
+      <div class="field-group">
+        <label for="email-intro">Intro / Greeting</label>
+        <textarea id="email-intro" rows="3" placeholder="e.g. Greetings, Trail Life families!&#10;Here's what's coming up for our troop.">Greetings, Trail Life families!
+
+Here's what's coming up for Troop PA-0002. We hope to see everyone out on the trail!</textarea>
+      </div>
+
+      <div class="field-group">
+        <label for="email-closing">Closing Message</label>
+        <textarea id="email-closing" rows="2" placeholder="e.g. Keep on the trail!">Keep on the trail!
+
+In His Service,
+Troop PA-0002 Leadership</textarea>
+      </div>
+
+      <hr class="divider">
+
+      <div class="sections-header">
+        <h2>Sections</h2>
+        <button class="btn btn-primary" id="add-section-btn">+ Add Section</button>
+      </div>
+
+      <p class="drag-hint">Drag sections to reorder them.</p>
+
+      <div id="section-list" class="section-list">
+        <!-- Sections rendered here -->
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL: Preview -->
+  <section class="panel panel-preview">
+    <div class="panel-header">
+      <h2>Email Preview</h2>
+      <div class="preview-actions">
+        <button class="btn btn-secondary" id="copy-html-btn">Copy HTML</button>
+        <span class="copy-toast" id="copy-toast">Copied!</span>
+      </div>
+    </div>
+    <div class="panel-content preview-scroll">
+      <div id="email-preview" class="email-preview-frame">
+        <!-- Live preview rendered here -->
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Section template (hidden) -->
+<template id="section-template">
+  <div class="section-card" data-id="">
+    <div class="section-card-header">
+      <span class="drag-handle" title="Drag to reorder">⠿</span>
+      <input type="text" class="section-title-input" placeholder="Section Title">
+      <button class="btn-icon section-delete-btn" title="Remove section">✕</button>
+    </div>
+    <div class="section-card-body">
+      <div class="field-group">
+        <label>Description</label>
+        <textarea class="section-desc" rows="3" placeholder="What's happening? Add details here."></textarea>
+      </div>
+      <div class="field-group">
+        <label>Detail Line <span class="field-hint">(date, time, location, etc.)</span></label>
+        <input type="text" class="section-detail" placeholder="e.g. Saturday, April 12 · 9:00 AM · Campsite A">
+      </div>
+      <div class="field-group">
+        <label>Tags</label>
+        <div class="tag-checkboxes">
+          <label class="tag-label tag-woodland">
+            <input type="checkbox" class="tag-check" value="Woodlands Trails"> Woodlands Trails
+          </label>
+          <label class="tag-label tag-navigators">
+            <input type="checkbox" class="tag-check" value="Navigators"> Navigators
+          </label>
+          <label class="tag-label tag-adventurers">
+            <input type="checkbox" class="tag-check" value="Adventurers"> Adventurers
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>
