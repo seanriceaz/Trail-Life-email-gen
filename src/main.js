@@ -14,6 +14,8 @@
 import Sortable from 'sortablejs';
 import { addSection, setOnSectionChange } from './sectionManager.js';
 import { buildEmailHtml } from './emailBuilder.js';
+import { buildPrompt, importYaml } from './aiTools.js';
+import { openModal, closeModal, initModals } from './modal.js';
 
 // ─── Preview ──────────────────────────────────────────────────────────────────
 
@@ -35,7 +37,7 @@ function renderPreview() {
 function copyHtml() {
   const html = buildEmailHtml();
 
-  const onSuccess = () => showToast('HTML copied to clipboard!');
+  const onSuccess = () => showToast('copy-toast', 'HTML copied to clipboard!');
 
   navigator.clipboard.writeText(html).then(onSuccess).catch(() => {
     // execCommand fallback: works in older / restricted environments
@@ -51,14 +53,24 @@ function copyHtml() {
 }
 
 /**
- * Briefly shows the copy confirmation toast next to the Copy HTML button.
+ * Briefly shows a copy confirmation toast.
+ * @param {string} toastId - Element id of the toast span.
  * @param {string} message
  */
-function showToast(message) {
-  const toast = document.getElementById('copy-toast');
+function showToast(toastId, message) {
+  const toast = document.getElementById(toastId);
   toast.textContent = message;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+/**
+ * Rebuilds the read-only prompt output textarea from the current context notes.
+ * Called when the modal opens and whenever the context textarea changes.
+ */
+function updatePromptOutput() {
+  const context = document.getElementById('prompt-context').value;
+  document.getElementById('prompt-output').value = buildPrompt(context);
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
@@ -85,6 +97,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('add-section-btn').addEventListener('click', () => addSection());
   document.getElementById('copy-html-btn').addEventListener('click', copyHtml);
+
+  // ── AI Tools ────────────────────────────────────────────────────────────────
+
+  // "Get AI Prompt" — open the prompt modal and rebuild the preview textarea
+  // whenever the user edits their context notes
+  document.getElementById('btn-get-prompt').addEventListener('click', () => {
+    updatePromptOutput();
+    openModal('modal-prompt');
+  });
+
+  document.getElementById('prompt-context').addEventListener('input', updatePromptOutput);
+
+  document.getElementById('btn-copy-prompt').addEventListener('click', () => {
+    const output = document.getElementById('prompt-output');
+    navigator.clipboard.writeText(output.value).catch(() => {
+      output.select();
+      document.execCommand('copy');
+    }).finally(() => showToast('prompt-copy-toast', 'Copied!'));
+  });
+
+  // "Import YAML" — open the import modal
+  document.getElementById('btn-import-yaml').addEventListener('click', () => {
+    document.getElementById('import-yaml-input').value = '';
+    document.getElementById('import-error').hidden = true;
+    openModal('modal-import');
+  });
+
+  document.getElementById('btn-load-yaml').addEventListener('click', () => {
+    const yamlText  = document.getElementById('import-yaml-input').value;
+    const errorEl   = document.getElementById('import-error');
+
+    try {
+      importYaml(yamlText);
+      errorEl.hidden = true;
+      renderPreview();
+      closeModal('modal-import');
+    } catch (err) {
+      errorEl.textContent = err.message;
+      errorEl.hidden = false;
+    }
+  });
+
+  initModals();
 
   // ── Demo content ────────────────────────────────────────────────────────────
   // Pre-load two example sections so the app looks useful on first visit.

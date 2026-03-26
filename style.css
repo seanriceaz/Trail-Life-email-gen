@@ -11,9 +11,12 @@
    5. Editor Panel — Newsletter Settings
    6. Editor Panel — Section Cards
    7. Editor Panel — Tag Checkboxes
-   8. Buttons
-   9. Preview Panel
-   10. Responsive
+   8. AI Tools Bar
+   9. Modals
+   10. Buttons
+   11. Preview Panel
+   12. App Footer
+   13. Responsive
    ============================================================================= */
 
 
@@ -351,7 +354,197 @@ textarea:focus {
 
 
 /* =============================================================================
-   8. BUTTONS
+   8. AI TOOLS BAR
+   Sits between the panel header and the newsletter settings fields.
+   Two small buttons open the prompt generator and YAML import modals.
+   ============================================================================= */
+
+.ai-tools-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: var(--tl-tan-light);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.ai-tools-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--tl-brown);
+  margin-right: 2px;
+  white-space: nowrap;
+}
+
+.btn-ai {
+  background: white;
+  color: var(--tl-navy);
+  border: 1.5px solid var(--tl-navy);
+  font-size: 0.75rem;
+  padding: 4px 10px;
+}
+
+.btn-ai:hover {
+  background: var(--tl-navy);
+  color: white;
+}
+
+
+/* =============================================================================
+   9. MODALS
+   Semi-transparent overlay with a centered card. Open state is toggled via
+   the .modal-open class (added/removed by modal.js).
+   ============================================================================= */
+
+.modal {
+  /* Hidden by default — fills the viewport as an overlay when open */
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal.modal-open {
+  display: flex;
+}
+
+.modal-card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 48px);
+  width: 100%;
+  overflow: hidden;
+}
+
+.modal-card-wide { max-width: 680px; }
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 2px solid var(--tl-brown);
+  flex-shrink: 0;
+}
+
+.modal-header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tl-navy);
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  line-height: 1;
+}
+.modal-close-btn:hover { background: var(--surface-2); color: var(--text); }
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-intro {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.modal-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--tl-brown);
+  margin-bottom: 4px;
+}
+
+.modal-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.modal-textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: white;
+  resize: vertical;
+  transition: border-color 0.15s;
+}
+.modal-textarea:focus {
+  outline: none;
+  border-color: var(--tl-navy);
+  box-shadow: 0 0 0 2px rgba(28,53,87,0.12);
+}
+
+/* The user's freeform context notes — editable, lighter background */
+.modal-textarea-context { min-height: 120px; }
+
+/* The assembled prompt output / YAML input — monospace for readability */
+.modal-textarea-prompt {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  background: var(--surface-2);
+  min-height: 200px;
+}
+
+.modal-error {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #fff0f0;
+  border: 1px solid #ffcccc;
+  border-radius: var(--radius);
+  font-size: 0.83rem;
+  color: var(--tl-red);
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+  flex-shrink: 0;
+}
+
+.btn-ghost {
+  background: none;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--tl-navy); color: var(--tl-navy); }
+
+
+/* =============================================================================
+   10. BUTTONS  (was 8)
    ============================================================================= */
 
 .btn {
@@ -379,7 +572,7 @@ textarea:focus {
 
 
 /* =============================================================================
-   9. PREVIEW PANEL
+   11. PREVIEW PANEL  (was 9)
    Renders the live email output. The email HTML is injected as innerHTML
    so it appears exactly as it will in an email client (minus sandboxing).
    ============================================================================= */
@@ -415,7 +608,7 @@ textarea:focus {
 
 
 /* =============================================================================
-   10. APP FOOTER
+   12. APP FOOTER  (was 10)
    ============================================================================= */
 
 .app-footer {
@@ -454,7 +647,7 @@ textarea:focus {
 
 
 /* =============================================================================
-   11. RESPONSIVE
+   13. RESPONSIVE  (was 11)
    On narrow viewports, stack the editor above the preview.
    ============================================================================= */
 

@@ -30,6 +30,14 @@
     <div class="panel-header">
       <h2>Email Settings</h2>
     </div>
+
+    <!-- AI Tools bar: prompt generator + YAML import -->
+    <div class="ai-tools-bar">
+      <span class="ai-tools-label">AI&nbsp;Tools</span>
+      <button class="btn btn-ai" id="btn-get-prompt">Get AI Prompt</button>
+      <button class="btn btn-ai" id="btn-import-yaml">Import YAML</button>
+    </div>
+
     <div class="panel-content">
 
       <div class="field-group">
@@ -97,6 +105,69 @@ Troop PA-0002 Leadership</textarea>
     &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a>
   </p>
 </footer>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MODAL: Get AI Prompt
+     Shows a ready-to-copy prompt for ChatGPT / Claude / Grok etc.
+     User adds their context in the bottom textarea before copying.
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="modal" id="modal-prompt" role="dialog" aria-modal="true" aria-labelledby="modal-prompt-title">
+  <div class="modal-card modal-card-wide">
+    <div class="modal-header">
+      <h2 id="modal-prompt-title">Get AI Prompt</h2>
+      <button class="modal-close-btn" data-modal-close aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-intro">
+        Paste this into <strong>ChatGPT, Claude, Grok</strong>, or any AI assistant.
+        Fill in your context at the bottom, then copy the whole thing.
+        The AI will respond with YAML you can paste back here using <em>Import YAML</em>.
+      </p>
+
+      <label class="modal-label" for="prompt-context">Your context</label>
+      <p class="modal-hint">
+        Add upcoming events (with dates, times, locations), recaps of past events,
+        Bible verses, quotes, prayer requests, announcements — anything relevant to this newsletter.
+      </p>
+      <textarea id="prompt-context" class="modal-textarea modal-textarea-context" rows="6"
+        placeholder="Example:&#10;- Troop meeting April 3, 6:30pm at First Baptist, Fellowship Hall&#10;- Spring campout April 18-20 at Blue Knob State Park&#10;- Bible verse: Proverbs 27:17&#10;- Reminder: dues are due by April 15"></textarea>
+
+      <label class="modal-label" for="prompt-output" style="margin-top:16px;">Full prompt (copy this)</label>
+      <textarea id="prompt-output" class="modal-textarea modal-textarea-prompt" rows="10" readonly></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="btn-copy-prompt">Copy Full Prompt</button>
+      <span class="copy-toast" id="prompt-copy-toast">Copied!</span>
+      <button class="btn btn-ghost" data-modal-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MODAL: Import YAML
+     User pastes the AI's YAML output here to populate the builder.
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="modal" id="modal-import" role="dialog" aria-modal="true" aria-labelledby="modal-import-title">
+  <div class="modal-card modal-card-wide">
+    <div class="modal-header">
+      <h2 id="modal-import-title">Import from AI</h2>
+      <button class="modal-close-btn" data-modal-close aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-intro">
+        Paste the YAML output from your AI assistant below and click
+        <strong>Load into Builder</strong>. This will replace the current content.
+      </p>
+      <textarea id="import-yaml-input" class="modal-textarea modal-textarea-prompt" rows="16"
+        placeholder="Paste YAML here…&#10;&#10;Example:&#10;subject: &quot;April Newsletter&quot;&#10;intro: |&#10;  Greetings, Trail Life families!&#10;sections:&#10;  - title: Spring Campout&#10;    description: Don't miss our campout!&#10;    detail: &quot;April 18–20 · Blue Knob State Park&quot;&#10;    tags: [Navigators, Adventurers]"></textarea>
+      <p class="modal-error" id="import-error" hidden></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="btn-load-yaml">Load into Builder</button>
+      <button class="btn btn-ghost" data-modal-close>Cancel</button>
+    </div>
+  </div>
+</div>
 
 <!-- Section template (hidden) -->
 <template id="section-template">
