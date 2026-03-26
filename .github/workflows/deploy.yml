@@ -1,0 +1,36 @@
+name: Build & Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # allow manual runs from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'  # caches node_modules between runs for faster builds
+
+      - name: Install dependencies
+        run: npm ci  # uses package-lock.json for reproducible installs
+
+      - name: Build
+        run: npm run build  # outputs to dist/ (configured in vite.config.js)
+
+      - name: Deploy dist/ to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist   # deploy the Vite build output, not the source
+          publish_branch: gh-pages
+          enable_jekyll: false  # adds .nojekyll — serves files as-is, no Jekyll processing
