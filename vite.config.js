@@ -10,10 +10,11 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     // Multi-page app: list every HTML entry point so Vite includes them all in the build.
+    // Uses import.meta.dirname (Node 22 ESM standard) instead of __dirname (CJS-only).
     rollupOptions: {
       input: {
-        main:    resolve(__dirname, 'index.html'),
-        privacy: resolve(__dirname, 'privacy.html'),
+        main:    resolve(import.meta.dirname, 'index.html'),
+        privacy: resolve(import.meta.dirname, 'privacy.html'),
       },
     },
   },
