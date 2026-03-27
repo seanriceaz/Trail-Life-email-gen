@@ -1,6 +1,6 @@
-# Trail Life PA-0002 — Email Generator
+# Trail Life — Email Generator
 
-A browser-based newsletter email generator for Trail Life Troop PA-0002. Build drag-and-drop email newsletters and copy the finished HTML straight into Gmail, Outlook, or any other email client.
+A browser-based newsletter email generator for Trail Life troops. Build drag-and-drop email newsletters and copy the finished HTML straight into Gmail, Outlook, or any other email client.
 
 **[Open the app →](https://seanrice.net/Trail-Life-email-gen/)**
 

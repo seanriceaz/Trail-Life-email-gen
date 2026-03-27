@@ -112,7 +112,7 @@ function buildHeaderBlock(subject) {
                                   color:${COLORS.gold}; margin-bottom:4px;">Trail Life USA</div>
                       <div style="font-family:'Open Sans',Arial,sans-serif; font-size:22px;
                                   font-weight:700; color:#ffffff; line-height:1.2;">
-                        Troop PA-0002
+                        Troop ZZ-1234
                       </div>
                     </td>
                   </tr>
@@ -183,11 +183,11 @@ function buildFooterBlock() {
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:12px;
                             font-weight:700; color:${COLORS.gold}; letter-spacing:1px;
                             text-transform:uppercase; margin-bottom:4px;">
-                  Trail Life USA · Troop PA-0002
+                  Trail Life USA · Troop ZZ-1234
                 </div>
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
                             color:rgba(255,255,255,0.5); line-height:1.6;">
-                  You are receiving this email as a member of Troop PA-0002.
+                  You are receiving this email as a member of Troop ZZ-1234.
                 </div>
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
                             color:rgba(255,255,255,0.5); margin-top:4px;">

@@ -1,7 +1,7 @@
 {
   "name": "trail-life-email-gen",
   "version": "1.0.0",
-  "description": "Trail Life USA Troop PA-0002 — Newsletter Email Generator",
+  "description": "Trail Life USA — Newsletter Email Generator",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -41,7 +41,7 @@ import { addSection } from './sectionManager.js';
  * The user's context is appended below the divider at the end.
  */
 const PROMPT_INSTRUCTIONS = `\
-You are helping create a newsletter email for Trail Life Troop PA-0002.
+You are helping create a newsletter email for a Trail Life troop.
 Trail Life USA is a Christ-centered outdoor adventure program for boys ages 5–17,
 organized into three program divisions by age.
 
@@ -57,7 +57,7 @@ intro: |
 closing: |
   Your sign-off here.
   In His Service,
-  Troop PA-0002 Leadership
+  Troop Leadership
 
 sections:
   - title: Section Title
