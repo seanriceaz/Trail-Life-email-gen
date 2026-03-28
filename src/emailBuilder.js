@@ -64,8 +64,8 @@ export function buildEmailHtml() {
 
     <!-- 600px email container -->
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600"
-           style="max-width:600px; width:100%; background-color:#ffffff; border-radius:4px;
-                  overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,0.12);">
+           style="max-width:600px; width:100%; background-color:#ffffff; border-radius:8px;
+                  overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,0.10);">
 
       ${buildHeaderBlock(subject)}
       ${intro   ? buildIntroBlock(intro)     : ''}
@@ -120,8 +120,8 @@ function buildHeaderBlock(subject) {
 
                 <!-- Subject line, separated by a subtle rule -->
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:14px;
-                            color:rgba(255,255,255,0.65); margin-top:14px; padding-top:14px;
-                            border-top:1px solid rgba(255,255,255,0.15);">
+                            color:${COLORS.headerSubject}; margin-top:14px; padding-top:14px;
+                            border-top:1px solid rgba(255,255,255,0.12);">
                   ${esc(subject)}
                 </div>
               </td>
@@ -186,11 +186,11 @@ function buildFooterBlock() {
                   Trail Life USA · Troop ZZ-1234
                 </div>
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
-                            color:rgba(255,255,255,0.5); line-height:1.6;">
+                            color:${COLORS.footerMuted}; line-height:1.6;">
                   You are receiving this email as a member of Troop ZZ-1234.
                 </div>
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
-                            color:rgba(255,255,255,0.5); margin-top:4px;">
+                            color:${COLORS.footerMuted}; margin-top:4px;">
                   <a href="https://traillifeusa.com"
                      style="color:${COLORS.gold}; text-decoration:none;">traillifeusa.com</a>
                 </div>
@@ -216,7 +216,7 @@ function buildSectionBlock(section) {
       <tr>
         <td style="padding:0 32px;">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
-                 style="margin:18px 0; border-radius:3px; overflow:hidden;
+                 style="margin:20px 0; border-radius:6px; overflow:hidden;
                         border:1px solid ${COLORS.borderLight};">
             ${buildSectionHeader(section.title)}
             ${buildSectionBody(section)}
@@ -226,14 +226,17 @@ function buildSectionBlock(section) {
 }
 
 /**
- * Brown header bar with the section title in white, all-caps.
+ * Light warm-tan header row with the section title in brown.
+ * Avoids a heavy reversed bar; still clearly separates header from body.
+ * Contrast: brown (#835D32) on sectionHeaderBg (#EDE7DE) = 4.77:1 ✓
  */
 function buildSectionHeader(title) {
   return `
           <tr>
-            <td style="background-color:${COLORS.brown}; padding:10px 16px;">
-              <span style="font-family:'Open Sans',Arial,sans-serif; font-size:14px;
-                           font-weight:700; color:#ffffff; letter-spacing:0.4px;
+            <td style="background-color:${COLORS.sectionHeaderBg}; padding:9px 16px;
+                       border-bottom:1px solid ${COLORS.borderLight};">
+              <span style="font-family:'Open Sans',Arial,sans-serif; font-size:12px;
+                           font-weight:700; color:${COLORS.brown}; letter-spacing:0.8px;
                            text-transform:uppercase;">
                 ${esc(title)}
               </span>
