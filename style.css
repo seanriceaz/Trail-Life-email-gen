@@ -294,20 +294,6 @@ textarea:focus {
 
 .section-card-body { padding: 14px 14px 12px; }
 
-/* Detail line: full-width, no box border — clean underline style */
-.section-detail {
-  border: none;
-  border-bottom: 1px solid var(--border);
-  border-radius: 0;
-  background: transparent;
-  padding-left: 2px;
-  padding-right: 2px;
-}
-.section-detail:focus {
-  border-bottom-color: var(--tl-navy);
-  box-shadow: none;
-}
-
 /* Delete (✕) button in the section header */
 .btn-icon {
   background: none;

@@ -245,7 +245,7 @@ function buildSectionHeader(title) {
  * Section body: detail callout (if any), description text, and tag badges.
  *
  * Layout order:
- *   1. Detail line  — light tan box with gold left border (date / time / location)
+ *   1. Detail line  — subtle full-width muted text with a light bottom border
  *   2. Description  — plain paragraph text
  *   3. Tag badges   — colored pills for program divisions
  */
@@ -255,10 +255,9 @@ function buildSectionBody(section) {
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
                  style="margin:0 0 12px;">
             <tr>
-              <td style="padding:10px 14px; background-color:${COLORS.tanLight};
-                         border-left:3px solid ${COLORS.gold}; border-radius:2px;
-                         font-family:'Open Sans',Arial,sans-serif; font-size:13px;
-                         color:${COLORS.brown}; font-weight:700;">
+              <td style="padding:6px 0 8px; border-bottom:1px solid ${COLORS.borderLight};
+                         font-family:'Open Sans',Arial,sans-serif; font-size:12px;
+                         color:${COLORS.textMuted}; letter-spacing:0.3px;">
                 ${esc(section.detail)}
               </td>
             </tr>
