@@ -46,8 +46,8 @@
   --text-muted:   #666;
 
   /* Misc */
-  --radius: 6px;
-  --shadow: 0 1px 4px rgba(0,0,0,0.10);
+  --radius: 10px;
+  --shadow: 0 1px 6px rgba(0,0,0,0.08);
 }
 
 
@@ -245,7 +245,7 @@ textarea:focus {
 .section-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 14px;
   box-shadow: var(--shadow);
   overflow: hidden;
 }
@@ -254,13 +254,13 @@ textarea:focus {
 .section-card.sortable-ghost  { opacity: 0.35; }
 .section-card.sortable-chosen { box-shadow: 0 4px 16px rgba(28,53,87,0.18); }
 
-/* Dark navy header bar containing the drag handle, title, and delete button */
+/* Muted slate header bar containing the drag handle, title, and delete button */
 .section-card-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
-  background: var(--tl-navy);
+  padding: 10px 14px;
+  background: #3d5068;
 }
 
 .drag-handle {
@@ -292,7 +292,21 @@ textarea:focus {
   box-shadow: none;
 }
 
-.section-card-body { padding: 14px 12px 10px; }
+.section-card-body { padding: 14px 14px 12px; }
+
+/* Detail line: full-width, no box border — clean underline style */
+.section-detail {
+  border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.section-detail:focus {
+  border-bottom-color: var(--tl-navy);
+  box-shadow: none;
+}
 
 /* Delete (✕) button in the section header */
 .btn-icon {
