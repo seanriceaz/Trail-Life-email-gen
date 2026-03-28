@@ -25,7 +25,7 @@ import { COLORS, TAGS } from './constants.js';
 import { getAllSectionData } from './sectionManager.js';
 
 // Build a lookup map from tag value → badge colors for quick access in loops.
-// e.g. TAG_COLOR_MAP['Navigators'] → { bg: '#2B5FA1', text: '#fff' }
+// e.g. TAG_COLOR_MAP['Navigators & Adventurers'] → { bg: '#2B5FA1', text: '#fff' }
 const TAG_COLOR_MAP = Object.fromEntries(
   TAGS.map(t => [t.value, { bg: t.bg, text: t.text }])
 );

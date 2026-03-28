@@ -7,7 +7,7 @@ A browser-based newsletter email generator for Trail Life troops. Build drag-and
 ## Features
 
 - Drag-and-drop sections to reorder them
-- Each section supports a title, description, detail line (date / time / location), and program-division tags (Woodlands Trails, Navigators, Adventurers)
+- Each section supports a title, description, detail line (date / time / location), and program-division tags (Woodland Trails, Navigators & Adventurers)
 - Live preview updates as you type
 - One-click copy of the finished HTML email
 

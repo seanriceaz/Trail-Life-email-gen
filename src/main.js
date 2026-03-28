@@ -149,14 +149,14 @@ document.addEventListener('DOMContentLoaded', () => {
     'Upcoming Meeting',
     "Join us for our regular troop meeting! We'll be working on badge requirements and planning our next campout.",
     'Thursday, April 3 · 6:30 PM · First Baptist Church, Fellowship Hall',
-    ['Woodlands Trails', 'Navigators', 'Adventurers']
+    ['Woodland Trails', 'Navigators & Adventurers']
   );
 
   addSection(
     'Spring Campout',
     "Don't miss our annual spring campout! Activities include orienteering, fire-starting, and shelter building. Permission slips due by April 7th.",
     'April 18–20 · Blue Knob State Park · Bring full gear',
-    ['Navigators', 'Adventurers']
+    ['Navigators & Adventurers']
   );
 
   renderPreview();

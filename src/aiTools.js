@@ -29,9 +29,8 @@ import { addSection } from './sectionManager.js';
 //     tags:        string[] — subset of valid tag values below (optional)
 //
 // Valid tag values (must match exactly):
-//   "Woodlands Trails"  — boys ages 5–10
-//   "Navigators"        — boys ages 11–13
-//   "Adventurers"       — boys ages 14–17
+//   "Woodland Trails"          — boys ages 5–10
+//   "Navigators & Adventurers" — boys ages 11–17
 
 // ─── AI prompt template ───────────────────────────────────────────────────────
 
@@ -43,7 +42,7 @@ import { addSection } from './sectionManager.js';
 const PROMPT_INSTRUCTIONS = `\
 You are helping create a newsletter email for a Trail Life troop.
 Trail Life USA is a Christ-centered outdoor adventure program for boys ages 5–17,
-organized into three program divisions by age.
+organized into program divisions by age.
 
 Generate the newsletter as YAML using this exact format:
 
@@ -65,17 +64,16 @@ sections:
       Body text for this section.
       Each non-blank line becomes a paragraph. Keep it encouraging and warm.
     detail: "Day, Month Date · Time · Location"  # optional — omit if not applicable
-    tags: [Woodlands Trails, Navigators, Adventurers]  # optional — see valid values below
+    tags: [Woodland Trails, Navigators & Adventurers]  # optional — see valid values below
 
   - title: Another Section
     description: A shorter announcement can be a single line.
-    tags: [Navigators]
+    tags: [Navigators & Adventurers]
 ---
 
 Valid tag values — use exactly these strings, include only relevant age groups:
-  Woodlands Trails  (boys ages 5–10)
-  Navigators        (boys ages 11–13)
-  Adventurers       (boys ages 14–17)
+  Woodland Trails          (boys ages 5–10)
+  Navigators & Adventurers (boys ages 11–17)
 
 Rules:
   - Output ONLY the YAML. No explanation, no extra text, no markdown code fences.
@@ -191,15 +189,15 @@ function stripCodeFences(str) {
  * Normalizes the tags value from the YAML.
  * Handles: array of strings, a single string, or missing/null.
  *
- * Matching is case-insensitive so LLM output like "navigators" or
- * "WOODLANDS TRAILS" still resolves to the correct canonical value.
+ * Matching is case-insensitive so LLM output like "navigators & adventurers" or
+ * "WOODLAND TRAILS" still resolves to the correct canonical value.
  * Unknown values that don't fuzzy-match any valid tag are silently dropped.
  *
  * @param {string|string[]|null} raw
  * @returns {string[]}  Canonical tag strings ready to match checkbox values.
  */
 function normalizeTags(raw) {
-  const VALID = TAGS.map(t => t.value); // ['Woodlands Trails', 'Navigators', 'Adventurers']
+  const VALID = TAGS.map(t => t.value); // ['Woodland Trails', 'Navigators & Adventurers']
 
   const candidates = Array.isArray(raw)       ? raw
                    : typeof raw === 'string'  ? [raw]

@@ -29,16 +29,14 @@ export const COLORS = {
 // ─── Program division tags ────────────────────────────────────────────────────
 
 /**
- * The three Trail Life program divisions.
- *   Woodlands Trails — ages 5–10
- *   Navigators       — ages 11–13
- *   Adventurers      — ages 14–17
+ * The two Trail Life program tag groups.
+ *   Woodland Trails        — ages 5–10
+ *   Navigators & Adventurers — ages 11–17
  *
  * Each tag object drives both the editor UI (cssClass) and the email
  * output (bg / text colors on the badge pills).
  */
 export const TAGS = [
-  { value: 'Woodlands Trails', cssClass: 'tag-woodland',    bg: '#4A7A3C', text: '#fff' },
-  { value: 'Navigators',       cssClass: 'tag-navigators',  bg: '#2B5FA1', text: '#fff' },
-  { value: 'Adventurers',      cssClass: 'tag-adventurers', bg: '#C85A1F', text: '#fff' },
+  { value: 'Woodland Trails',          cssClass: 'tag-woodland',  bg: '#4A7A3C', text: '#fff' },
+  { value: 'Navigators & Adventurers', cssClass: 'tag-nav-adv',   bg: '#2B5FA1', text: '#fff' },
 ];

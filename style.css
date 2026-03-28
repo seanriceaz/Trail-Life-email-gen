@@ -35,9 +35,8 @@
   --tl-tan-light: #F5EDD6;  /* light tan for callout backgrounds */
 
   /* Program division colors */
-  --tl-green:     #4A7A3C;  /* Woodlands Trails */
-  --tl-blue:      #2B5FA1;  /* Navigators */
-  --tl-orange:    #C85A1F;  /* Adventurers */
+  --tl-green:     #4A7A3C;  /* Woodland Trails */
+  --tl-blue:      #2B5FA1;  /* Navigators & Adventurers */
 
   /* UI neutrals */
   --surface:      #ffffff;
@@ -343,14 +342,12 @@ textarea:focus {
 }
 
 /* Unchecked: outline only */
-.tag-woodland   { border-color: var(--tl-green);  color: var(--tl-green); }
-.tag-navigators { border-color: var(--tl-blue);   color: var(--tl-blue); }
-.tag-adventurers{ border-color: var(--tl-orange); color: var(--tl-orange); }
+.tag-woodland { border-color: var(--tl-green); color: var(--tl-green); }
+.tag-nav-adv  { border-color: var(--tl-blue);  color: var(--tl-blue); }
 
 /* Checked: filled pill */
-.tag-woodland:has(input:checked)    { background: var(--tl-green);  color: #fff; }
-.tag-navigators:has(input:checked)  { background: var(--tl-blue);   color: #fff; }
-.tag-adventurers:has(input:checked) { background: var(--tl-orange); color: #fff; }
+.tag-woodland:has(input:checked) { background: var(--tl-green); color: #fff; }
+.tag-nav-adv:has(input:checked)  { background: var(--tl-blue);  color: #fff; }
 
 
 /* =============================================================================

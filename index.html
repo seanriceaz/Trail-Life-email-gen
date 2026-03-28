@@ -159,7 +159,7 @@ Troop Leadership</textarea>
         <strong>Load into Builder</strong>. This will replace the current content.
       </p>
       <textarea id="import-yaml-input" class="modal-textarea modal-textarea-prompt" rows="16"
-        placeholder="Paste YAML here…&#10;&#10;Example:&#10;subject: &quot;April Newsletter&quot;&#10;intro: |&#10;  Greetings, Trail Life families!&#10;sections:&#10;  - title: Spring Campout&#10;    description: Don't miss our campout!&#10;    detail: &quot;April 18–20 · Blue Knob State Park&quot;&#10;    tags: [Navigators, Adventurers]"></textarea>
+        placeholder="Paste YAML here…&#10;&#10;Example:&#10;subject: &quot;April Newsletter&quot;&#10;intro: |&#10;  Greetings, Trail Life families!&#10;sections:&#10;  - title: Spring Campout&#10;    description: Don't miss our campout!&#10;    detail: &quot;April 18–20 · Blue Knob State Park&quot;&#10;    tags: [Navigators &amp; Adventurers]"></textarea>
       <p class="modal-error" id="import-error" hidden></p>
     </div>
     <div class="modal-footer">
@@ -190,13 +190,10 @@ Troop Leadership</textarea>
         <label>Tags</label>
         <div class="tag-checkboxes">
           <label class="tag-label tag-woodland">
-            <input type="checkbox" class="tag-check" value="Woodlands Trails"> Woodlands Trails
+            <input type="checkbox" class="tag-check" value="Woodland Trails"> Woodland Trails
           </label>
-          <label class="tag-label tag-navigators">
-            <input type="checkbox" class="tag-check" value="Navigators"> Navigators
-          </label>
-          <label class="tag-label tag-adventurers">
-            <input type="checkbox" class="tag-check" value="Adventurers"> Adventurers
+          <label class="tag-label tag-nav-adv">
+            <input type="checkbox" class="tag-check" value="Navigators &amp; Adventurers"> Navigators &amp; Adventurers
           </label>
         </div>
       </div>
