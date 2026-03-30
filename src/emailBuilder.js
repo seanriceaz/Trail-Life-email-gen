@@ -86,38 +86,38 @@ export function buildEmailHtml() {
 // Each function returns an HTML string for one logical row of the email.
 
 /**
- * Sage green header with troop name and subject line.
- * Gold accent stripe at the bottom provides a warm Trail Life brand touch.
+ * Sage green header with two-line typographic treatment:
+ *   Line 1 (small)  — "Trail Life Troop [number]"  — eyebrow/label
+ *   Line 2 (large)  — subject line                 — primary heading
  *
  * Text contrast on sage (#4A6658):
- *   "Trail Life USA" label — COLORS.headerSubject (#DAEEE7) = 4.92:1 ✓
- *   Troop name            — white (#FFFFFF)                 = 5.94:1 ✓
- *   Subject line          — COLORS.headerSubject (#DAEEE7) = 4.92:1 ✓
+ *   Eyebrow label — COLORS.headerSubject (#DAEEE7) = 4.92:1 ✓
+ *   Subject line  — white (#FFFFFF)                = 5.94:1 ✓
  */
 function buildHeaderBlock(subject, troop) {
+  const eyebrow = troop ? `Trail Life Troop ${esc(troop)}` : 'Trail Life';
+
   return `
-      <!-- HEADER: troop name, subject line -->
+      <!-- HEADER: troop label + subject line as primary heading -->
       <tr>
         <td style="background-color:${COLORS.sage}; padding:0;">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             <tr>
-              <td style="padding:28px 32px 22px;">
+              <td style="padding:28px 32px 24px;">
 
-                <!-- "Trail Life USA" label + troop name -->
-                <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
-                            font-weight:700; letter-spacing:2px; text-transform:uppercase;
-                            color:${COLORS.headerSubject}; margin-bottom:4px;">Trail Life USA</div>
-                <div style="font-family:'Open Sans',Arial,sans-serif; font-size:22px;
-                            font-weight:700; color:#ffffff; line-height:1.2;">
-                  ${troop ? `Troop ${esc(troop)}` : 'Trail Life'}
+                <!-- Eyebrow: "Trail Life Troop XX" -->
+                <div style="font-family:'Open Sans',Arial,sans-serif; font-size:13px;
+                            font-weight:600; letter-spacing:0.5px;
+                            color:${COLORS.headerSubject}; margin-bottom:10px;">
+                  ${eyebrow}
                 </div>
 
-                <!-- Subject line, separated by a subtle rule -->
-                <div style="font-family:'Open Sans',Arial,sans-serif; font-size:14px;
-                            color:${COLORS.headerSubject}; margin-top:14px; padding-top:14px;
-                            border-top:1px solid rgba(255,255,255,0.12);">
+                <!-- Primary heading: subject line -->
+                <div style="font-family:'Open Sans',Arial,sans-serif; font-size:26px;
+                            font-weight:700; color:#ffffff; line-height:1.25;">
                   ${esc(subject)}
                 </div>
+
               </td>
             </tr>
 
