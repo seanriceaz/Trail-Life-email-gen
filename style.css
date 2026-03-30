@@ -604,8 +604,7 @@ textarea:focus {
 
 .email-preview-frame {
   max-width: 620px;
-  margin: 24px auto;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  margin: 0 auto;
 }
 
 
