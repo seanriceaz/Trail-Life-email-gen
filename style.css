@@ -89,8 +89,6 @@ html, body {
   margin: 0 auto;
 }
 
-.app-logo svg { display: block; flex-shrink: 0; }
-
 .app-title {
   font-size: 1.2rem;
   font-weight: 700;
