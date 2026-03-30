@@ -313,12 +313,13 @@ function buildSectionBody(section) {
 
 /**
  * Converts a multi-line string into a series of <tr><td> rows.
+ * Each non-empty line is passed through parseInlineMarkdown before insertion.
  *
  * Why table rows instead of <br> tags? Some email clients collapse
  * multiple <br>s or apply inconsistent line-height. Rows give us
  * predictable spacing across clients.
  *
- * @param {string} text    - Raw multi-line text from a textarea
+ * @param {string} text    - Raw multi-line text (may contain Markdown)
  * @param {string} padding - CSS padding value for each <td> (default: bottom spacing)
  * @returns {string} HTML string of <tr> elements
  */
@@ -330,10 +331,61 @@ function textToTableRows(text, padding = '0 0 10px') {
             <tr>
               <td style="padding:${padding}; font-family:'Open Sans',Arial,sans-serif;
                          font-size:15px; color:${COLORS.textDark}; line-height:1.6;">
-                ${esc(line)}
+                ${parseInlineMarkdown(line)}
               </td>
             </tr>`)
     .join('');
+}
+
+/**
+ * Parses a small subset of Markdown in a single line of text and returns HTML.
+ * Supported syntax:
+ *   **text**       → bold
+ *   *text*         → italic
+ *   _text_         → underline
+ *   [label](url)   → hyperlink (navy, underlined)
+ *
+ * Text between matches is HTML-escaped. Match contents are also escaped
+ * before being wrapped in tags, preventing injection from user input.
+ *
+ * @param {string} text - One line of raw user text.
+ * @returns {string} HTML string safe for insertion into the email.
+ */
+function parseInlineMarkdown(text) {
+  const rules = [
+    // Links first — they can contain other punctuation inside brackets
+    [ /\[([^\]\n]+)\]\(([^)\n]+)\)/,
+      (_, label, href) =>
+        `<a href="${escAttr(href)}" style="color:${COLORS.navy};text-decoration:underline;">${esc(label)}</a>` ],
+    [ /\*\*([^*\n]+)\*\*/,  (_, t) => `<strong>${esc(t)}</strong>` ],
+    [ /\*([^*\n]+)\*/,      (_, t) => `<em>${esc(t)}</em>` ],
+    [ /_([^_\n]+)_/,        (_, t) => `<span style="text-decoration:underline;">${esc(t)}</span>` ],
+  ];
+
+  let out  = '';
+  let rest = text;
+
+  while (rest.length) {
+    // Find the earliest-occurring match across all rules
+    let best = null;
+    for (const [re, fn] of rules) {
+      const m = rest.match(re);
+      if (m && (best === null || m.index < best.m.index)) {
+        best = { m, fn };
+      }
+    }
+
+    if (!best) {
+      out += esc(rest);   // no more markdown — escape and finish
+      break;
+    }
+
+    out  += esc(rest.slice(0, best.m.index));   // text before the match
+    out  += best.fn(...best.m);                 // rendered HTML for the match
+    rest  = rest.slice(best.m.index + best.m[0].length);
+  }
+
+  return out;
 }
 
 /**
@@ -349,4 +401,13 @@ function esc(str) {
     .replace(/</g,  '&lt;')
     .replace(/>/g,  '&gt;')
     .replace(/"/g,  '&quot;');
+}
+
+/** Escapes a string for safe use inside an HTML attribute value (e.g. href). */
+function escAttr(str) {
+  return String(str)
+    .replace(/&/g,  '&amp;')
+    .replace(/"/g,  '&quot;')
+    .replace(/</g,  '&lt;')
+    .replace(/>/g,  '&gt;');
 }

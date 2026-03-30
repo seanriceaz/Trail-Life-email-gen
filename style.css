@@ -196,6 +196,7 @@ textarea {
   background: var(--surface);
   transition: border-color 0.15s;
   resize: vertical;
+  min-height: 200px;
 }
 
 input[type="text"]:focus,
