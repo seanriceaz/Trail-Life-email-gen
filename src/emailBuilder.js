@@ -152,7 +152,7 @@ function buildClosingBlock(closing) {
   return `
       <!-- CLOSING: sign-off / signature -->
       <tr>
-        <td style="padding:24px 32px 28px; border-top:1px solid ${COLORS.borderLight};">
+        <td style="padding:24px 32px 28px;">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             ${textToTableRows(closing)}
           </table>
@@ -222,7 +222,7 @@ function buildSectionBlock(section) {
       <tr>
         <td style="padding:0 32px;">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"
-                 style="margin:20px 0; border-radius:6px; overflow:hidden;
+                 style="margin:12px 0; border-radius:6px; overflow:hidden;
                         border:1px solid ${COLORS.borderLight};">
             ${buildSectionHeader(section.title)}
             ${buildSectionBody(section)}

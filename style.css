@@ -202,7 +202,7 @@ textarea {
 #email-intro,
 #email-closing,
 .section-desc {
-  min-height: 150px;
+  min-height: 120px;
 }
 
 input[type="text"]:focus,
@@ -514,7 +514,7 @@ textarea:focus {
   font-size: 0.78rem;
   line-height: 1.5;
   background: var(--surface-2);
-  min-height: 150px;
+  min-height: 120px;
 }
 
 .modal-error {
