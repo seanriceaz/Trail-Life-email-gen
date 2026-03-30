@@ -86,38 +86,31 @@ export function buildEmailHtml() {
 // Each function returns an HTML string for one logical row of the email.
 
 /**
- * Dark navy header with the Trail Life logo mark, troop name, and subject line.
- * A gold stripe at the bottom acts as a visual divider.
+ * Sage green header with troop name and subject line.
+ * Gold accent stripe at the bottom provides a warm Trail Life brand touch.
+ *
+ * Text contrast on sage (#4A6658):
+ *   "Trail Life USA" label — COLORS.headerSubject (#DAEEE7) = 4.92:1 ✓
+ *   Troop name            — white (#FFFFFF)                 = 5.94:1 ✓
+ *   Subject line          — COLORS.headerSubject (#DAEEE7) = 4.92:1 ✓
  */
 function buildHeaderBlock(subject, troop) {
   return `
-      <!-- HEADER: logo, troop name, subject line -->
+      <!-- HEADER: troop name, subject line -->
       <tr>
-        <td style="background-color:${COLORS.navy}; padding:0;">
+        <td style="background-color:${COLORS.sage}; padding:0;">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             <tr>
               <td style="padding:28px 32px 22px;">
 
-                <!-- Logo mark + troop name side by side -->
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                  <tr>
-                    <td style="padding-right:14px; vertical-align:middle;">
-                      <!-- Red triangle: approximates the Trail Life logo mark -->
-                      <div style="width:52px; height:52px; background-color:${COLORS.red};
-                                  clip-path:polygon(50% 4%, 97% 92%, 3% 92%);
-                                  display:inline-block;"></div>
-                    </td>
-                    <td style="vertical-align:middle;">
-                      <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
-                                  font-weight:700; letter-spacing:2px; text-transform:uppercase;
-                                  color:${COLORS.gold}; margin-bottom:4px;">Trail Life USA</div>
-                      <div style="font-family:'Open Sans',Arial,sans-serif; font-size:22px;
-                                  font-weight:700; color:#ffffff; line-height:1.2;">
-                        ${troop ? `Troop ${esc(troop)}` : 'Trail Life'}
-                      </div>
-                    </td>
-                  </tr>
-                </table>
+                <!-- "Trail Life USA" label + troop name -->
+                <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
+                            font-weight:700; letter-spacing:2px; text-transform:uppercase;
+                            color:${COLORS.headerSubject}; margin-bottom:4px;">Trail Life USA</div>
+                <div style="font-family:'Open Sans',Arial,sans-serif; font-size:22px;
+                            font-weight:700; color:#ffffff; line-height:1.2;">
+                  ${troop ? `Troop ${esc(troop)}` : 'Trail Life'}
+                </div>
 
                 <!-- Subject line, separated by a subtle rule -->
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:14px;
@@ -168,8 +161,13 @@ function buildClosingBlock(closing) {
 }
 
 /**
- * Dark navy footer with troop name, tagline, and a link to traillifeusa.com.
+ * Sage footer matching the header, with troop name, disclaimer, and a link.
  * The brown stripe at the top mirrors the header's gold stripe as a bookend.
+ *
+ * Text contrast on sage (#4A6658):
+ *   Troop line  — white (#FFFFFF)                 = 5.94:1 ✓
+ *   Footer text — COLORS.footerMuted (#DAEEE7)    = 4.92:1 ✓
+ *   Link        — white (#FFFFFF)                 = 5.94:1 ✓
  *
  * @param {string} troop - Troop number entered by the user (may be empty).
  */
@@ -182,14 +180,14 @@ function buildFooterBlock(troop) {
   return `
       <!-- FOOTER: troop name, tagline, website link -->
       <tr>
-        <td style="background-color:${COLORS.navy}; padding:0;">
+        <td style="background-color:${COLORS.sage}; padding:0;">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
             <!-- Brown accent stripe (echoes the section header color) -->
             <tr><td style="background-color:${COLORS.brown}; height:4px;"></td></tr>
             <tr>
               <td style="padding:20px 32px; text-align:center;">
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:12px;
-                            font-weight:700; color:${COLORS.gold}; letter-spacing:1px;
+                            font-weight:700; color:#ffffff; letter-spacing:1px;
                             text-transform:uppercase; margin-bottom:4px;">
                   ${troopLine}
                 </div>
@@ -200,7 +198,7 @@ function buildFooterBlock(troop) {
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
                             color:${COLORS.footerMuted}; margin-top:4px;">
                   <a href="https://traillifeusa.com"
-                     style="color:${COLORS.gold}; text-decoration:none;">traillifeusa.com</a>
+                     style="color:#ffffff; text-decoration:underline;">traillifeusa.com</a>
                 </div>
               </td>
             </tr>

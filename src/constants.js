@@ -15,17 +15,19 @@
 // ─── Email output colors (used as inline styles) ──────────────────────────────
 
 export const COLORS = {
-  navy:             '#1C3557',
+  navy:             '#1C3557',  // kept for UI; not used in email header/footer
   brown:            '#835D32',
   red:              '#CC2029',
   gold:             '#C8922A',
+  sage:             '#4A6658',  // dusty green — email header & footer background
   white:            '#FFFFFF',
   textDark:         '#1a1a1a',
   textMuted:        '#555555',
   borderLight:      '#DDD5C8',
   sectionHeaderBg:  '#EDE7DE',  // light warm tan for section header bg; brown text = 4.77:1 ✓
-  headerSubject:    '#B0B8C4',  // muted blue-gray for header subject line on navy = 6.19:1 ✓
-  footerMuted:      '#9AAFC3',  // muted blue-gray for footer body text on navy  = 5.48:1 ✓
+  // Text colors designed for use on the sage (#4A6658) background:
+  headerSubject:    '#DAEEE7',  // muted light sage — subject line & "Trail Life USA" label = 4.92:1 ✓
+  footerMuted:      '#DAEEE7',  // muted light sage — footer disclaimer text = 4.92:1 ✓
 };
 
 // ─── Program division tags ────────────────────────────────────────────────────
