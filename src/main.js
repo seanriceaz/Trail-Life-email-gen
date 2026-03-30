@@ -80,10 +80,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // Tell sectionManager what to call when any section changes
   setOnSectionChange(renderPreview);
 
-  // Re-render preview when newsletter-level fields (subject, intro, closing) change
+  // Re-render preview when newsletter-level fields change
   ['email-subject', 'email-intro', 'email-closing'].forEach(id =>
     document.getElementById(id).addEventListener('input', renderPreview)
   );
+
+  // ── Troop number: live update field defaults ─────────────────────────────────
+  // Fields whose default values embed the troop number as "ZZ-1234".
+  // If the user hasn't edited a field away from its default, it updates
+  // automatically as the troop number is typed.
+  const TROOP_AWARE = {
+    'email-subject': troop => troop ? `Troop ${troop} Newsletter` : 'Newsletter',
+  };
+  let prevTroop = 'ZZ-1234'; // matches the initial default values above
+
+  document.getElementById('troop-number').addEventListener('input', e => {
+    const newTroop = e.target.value.trim();
+    Object.entries(TROOP_AWARE).forEach(([id, buildDefault]) => {
+      const el = document.getElementById(id);
+      if (el.value === buildDefault(prevTroop)) {
+        el.value = buildDefault(newTroop);
+      }
+    });
+    prevTroop = newTroop;
+    renderPreview();
+  });
 
   // Enable drag-and-drop section reordering via SortableJS.
   // The handle class prevents accidental drags when clicking inputs inside cards.

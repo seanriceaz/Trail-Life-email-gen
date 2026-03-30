@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trail Life — Email Generator</title>
+  <title>Trail Life Email Template Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
 <header class="app-header">
   <div class="app-header-inner">
     <div>
-      <p class="app-subtitle">Newsletter Email Generator</p>
+      <h1 class="app-title">Trail Life Email Template Generator</h1>
     </div>
   </div>
 </header>
@@ -35,7 +35,7 @@
 
       <div class="field-group">
         <label for="troop-number">Troop Number</label>
-        <input type="text" id="troop-number" placeholder="e.g. PA-0002" value="">
+        <input type="text" id="troop-number" placeholder="e.g. ZZ-1234" value="">
       </div>
 
       <div class="field-group">
@@ -50,13 +50,6 @@
 Here's what's coming up for our troop. We hope to see everyone out on the trail!</textarea>
       </div>
 
-      <div class="field-group">
-        <label for="email-closing">Closing Message</label>
-        <textarea id="email-closing" rows="2" placeholder="e.g. Walk Worthy!">Walk Worthy!
-
-Troop Leadership</textarea>
-      </div>
-
       <hr class="divider">
 
       <div class="sections-header">
@@ -68,6 +61,15 @@ Troop Leadership</textarea>
 
       <div id="section-list" class="section-list">
         <!-- Sections rendered here -->
+      </div>
+
+      <hr class="divider">
+
+      <div class="field-group">
+        <label for="email-closing">Closing Message</label>
+        <textarea id="email-closing" rows="2" placeholder="e.g. Walk Worthy!">Walk Worthy!
+
+Troop Leadership</textarea>
       </div>
 
     </div>
