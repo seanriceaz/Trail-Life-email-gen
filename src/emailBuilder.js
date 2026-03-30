@@ -39,6 +39,7 @@ const TAG_COLOR_MAP = Object.fromEntries(
  * @returns {string} Full HTML document ready to paste into an email client.
  */
 export function buildEmailHtml() {
+  const troop   = document.getElementById('troop-number').value.trim();
   const subject = document.getElementById('email-subject').value.trim();
   const intro   = document.getElementById('email-intro').value.trim();
   const closing = document.getElementById('email-closing').value.trim();
@@ -67,11 +68,11 @@ export function buildEmailHtml() {
            style="max-width:600px; width:100%; background-color:#ffffff; border-radius:8px;
                   overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,0.10);">
 
-      ${buildHeaderBlock(subject)}
+      ${buildHeaderBlock(subject, troop)}
       ${intro   ? buildIntroBlock(intro)     : ''}
       ${sectionBlocks}
       ${closing ? buildClosingBlock(closing) : ''}
-      ${buildFooterBlock()}
+      ${buildFooterBlock(troop)}
 
     </table>
 
@@ -88,7 +89,7 @@ export function buildEmailHtml() {
  * Dark navy header with the Trail Life logo mark, troop name, and subject line.
  * A gold stripe at the bottom acts as a visual divider.
  */
-function buildHeaderBlock(subject) {
+function buildHeaderBlock(subject, troop) {
   return `
       <!-- HEADER: logo, troop name, subject line -->
       <tr>
@@ -112,7 +113,7 @@ function buildHeaderBlock(subject) {
                                   color:${COLORS.gold}; margin-bottom:4px;">Trail Life USA</div>
                       <div style="font-family:'Open Sans',Arial,sans-serif; font-size:22px;
                                   font-weight:700; color:#ffffff; line-height:1.2;">
-                        Troop ZZ-1234
+                        ${troop ? `Troop ${esc(troop)}` : 'Trail Life'}
                       </div>
                     </td>
                   </tr>
@@ -169,8 +170,15 @@ function buildClosingBlock(closing) {
 /**
  * Dark navy footer with troop name, tagline, and a link to traillifeusa.com.
  * The brown stripe at the top mirrors the header's gold stripe as a bookend.
+ *
+ * @param {string} troop - Troop number entered by the user (may be empty).
  */
-function buildFooterBlock() {
+function buildFooterBlock(troop) {
+  const troopLine = troop ? `Trail Life USA · Troop ${esc(troop)}` : 'Trail Life USA';
+  const memberLine = troop
+    ? `You are receiving this email as a member of Troop ${esc(troop)}.`
+    : 'You are receiving this email as a member of a Trail Life troop.';
+
   return `
       <!-- FOOTER: troop name, tagline, website link -->
       <tr>
@@ -183,11 +191,11 @@ function buildFooterBlock() {
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:12px;
                             font-weight:700; color:${COLORS.gold}; letter-spacing:1px;
                             text-transform:uppercase; margin-bottom:4px;">
-                  Trail Life USA · Troop ZZ-1234
+                  ${troopLine}
                 </div>
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
                             color:${COLORS.footerMuted}; line-height:1.6;">
-                  You are receiving this email as a member of Troop ZZ-1234.
+                  ${memberLine}
                 </div>
                 <div style="font-family:'Open Sans',Arial,sans-serif; font-size:11px;
                             color:${COLORS.footerMuted}; margin-top:4px;">
