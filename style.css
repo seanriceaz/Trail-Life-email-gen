@@ -196,6 +196,12 @@ textarea {
   background: var(--surface);
   transition: border-color 0.15s;
   resize: vertical;
+}
+
+/* Long-form content fields get extra height */
+#email-intro,
+#email-closing,
+.section-desc {
   min-height: 200px;
 }
 
