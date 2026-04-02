@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EQ Calibration</string>
+
+    <!-- Button labels -->
+    <string name="btn_start">Start Measuring</string>
+    <string name="btn_stop">Stop</string>
+    <string name="btn_hold">Hold Snapshot</string>
+    <string name="btn_unhold">Release Hold</string>
+
+    <!-- Status messages -->
+    <string name="status_stopped">Stopped — tap Start to begin measuring</string>
+    <string name="status_running">Measuring… (point mic toward speakers)</string>
+
+    <!-- Hold indicator -->
+    <string name="hold_active">HOLD ACTIVE — Snapshot frozen</string>
+
+    <!-- EQ table section title -->
+    <string name="eq_recommendations_title">EQ Recommendations (relative to average level)</string>
+
+    <!-- Permission -->
+    <string name="permission_denied_message">Microphone permission is required to measure audio. Please grant it in app settings.</string>
+</resources>
